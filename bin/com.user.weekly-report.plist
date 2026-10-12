@@ -14,7 +14,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/jiangwenrui/Downloads/mass/For_Codex/bin/notify_weekly_report.sh</string>
+        <string>/Users/jiangwenrui/Downloads/mass/23-For_Codex/bin/notify_weekly_report.sh</string>
     </array>
 
     <!-- 每周五 17:00 (launchd: Sunday=1 ... Friday=6, Saturday=7) -->

@@ -2,7 +2,7 @@
 # install_reminder.sh - 一键安装 launchd 周五提醒
 set -euo pipefail
 
-PROJECT="/Users/jiangwenrui/Downloads/mass/For_Codex"
+PROJECT="/Users/jiangwenrui/Downloads/mass/23-For_Codex"
 SRC="${PROJECT}/bin/com.user.weekly-report.plist"
 DST="${HOME}/Library/LaunchAgents/com.user.weekly-report.plist"
 

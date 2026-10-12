@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-PROJECT="/Users/jiangwenrui/Downloads/mass/For_Codex"
+PROJECT="/Users/jiangwenrui/Downloads/mass/23-For_Codex"
 WR_CMD="python3 ${PROJECT}/weekly_report.py new"
 
 # 1. macOS 通知
