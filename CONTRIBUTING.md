@@ -7,7 +7,7 @@ This is a personal tool — it's been designed for one user (me) and that shows.
 It's zero-dep — only Python 3.11+ standard library.
 
 ```bash
-git clone https://github.com/awuawuheiyohei/Jarvis-design-report.git
+git clone https://github.com/awuawuheiyohei/23-For_Codex.git
 cd Jarvis-design-report
 ```
 
@@ -88,7 +88,7 @@ plutil -lint bin/com.user.weekly-report.plist
 
 ## Reporting issues
 
-Open an [issue](https://github.com/awuawuheiyohei/Jarvis-design-report/issues). Include:
+Open an [issue](https://github.com/awuawuheiyohei/23-For_Codex/issues). Include:
 
 - What you ran (full command)
 - What you expected

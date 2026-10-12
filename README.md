@@ -1,6 +1,6 @@
 # 周报工具 (Weekly Report CLI)
 
-[![CI](https://github.com/awuawuheiyohei/Jarvis-design-report/actions/workflows/ci.yml/badge.svg)](https://github.com/awuawuheiyohei/Jarvis-design-report/actions/workflows/ci.yml)
+[![CI](https://github.com/awuawuheiyohei/23-For_Codex/actions/workflows/ci.yml/badge.svg)](https://github.com/awuawuheiyohei/23-For_Codex/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 生活 / 工作 两个分类，自动按 ISO 周归档为 Markdown 文件，方便后续搜索、合并、或发到 IM。
@@ -28,6 +28,83 @@ For_Codex/
         ├── 2026-yearly.md         # yearly 生成
         ├── 2026-yearly.json
         └── 2026-recap.md          # recap --provider openai 生成 (有 API key 时)
+```
+
+## 📖 操作手册 (日常工作流)
+
+**先看这里。** 上面的"命令" / "CI" 等是项目元信息, 这里讲的是"我今天/这周怎么用"。
+
+### 第一次上手
+
+```bash
+# 1. 克隆 (如果换电脑)
+git clone https://github.com/awuawuheiyohei/23-For_Codex.git
+cd Jarvis-design-report
+
+# 2. 起 web UI
+python3 bin/weekly_report_web.py
+# 浏览器打开 http://127.0.0.1:8765
+
+# 3. CLI 装个别名 (写到 ~/.zshrc)
+alias wr="python3 ~/Downloads/mass/23-For_Codex/weekly_report.py"
+```
+
+### 每周典型流程
+
+```bash
+# 1. 写本周周报 (打开 web UI, 点主页 ✍️ 写本周周报)
+#    或 CLI:
+wr new
+#    > 工作: 本周完成, 下周计划, 心得 (一行一条)
+#    > 生活: 本周完成, 心得
+#    > :q 退出
+
+# 2. 提交到 GitHub (本地磁盘坏了也不丢)
+wr commit 2026 35
+# 或 web UI: 在 view 页点 💾 提交并 push 按钮
+```
+
+### 不同场景走哪条路径
+
+| 我想... | 走哪条 |
+|---|---|
+| 写一份新周报 | `wr new` 或 `/new` |
+| **加新条目** (不删旧的) | `wr new --year Y --week W` 或 `/add/<Y>/<W>` (✅ append, 推荐) |
+| 大改写 (覆盖整个) | `/edit/<Y>/<W>` ⚠️ 替换, 旧版本自动备份 |
+| 改个错别字 | `/edit/<Y>/<W>` (推荐用 replace 模式) |
+| 删本周周报 | `wr new --year Y --week W` 输空 (覆盖), 或 `/delete/<Y>/<W>` |
+| 看月汇总 | `wr summary 2026 7` |
+| 看季度 | `wr quarter 2026 3` |
+| 看年度 (含 plan 追踪) | `wr yearly 2026` |
+| AI 年度复盘 | `wr recap 2026` (粘贴 prompt) 或 `--provider openai` |
+| 同步计划到 GitHub Issues | `wr sync 2026 --repo 用户/仓库` |
+
+### 数据安全三件套
+
+1. **本地磁盘** — `reports/2026/*.md` (浏览器/CLI 直接写)
+2. **误改保护** — `reports/2026/.bak/{filename}-{ts}.md.bak` (每次保存前自动备份, 留 10 个)
+3. **远端备份 + 多设备同步** — `wr commit` 或 web UI 💾 按钮
+
+> 三个层次一个不漏: 改坏了有 .bak, 磁盘坏了有 GitHub, 多人协作有 git。
+
+### 故障排查
+
+```bash
+# 改周报后看不到?
+wr list                          # 列出现有, 确认文件名
+
+# 汇总统计不对?
+wr yearly 2026                   # 重新生成
+wr summary 2026 7                # 重新生成
+
+# 误删了?
+ls reports/2026/.bak/            # 找最近备份
+cp reports/2026/.bak/2026-W30-work-20260825-1042.md.bak reports/2026/2026-W30-work.md
+
+# push 失败 (网络问题)?
+gh auth status                   # 检查 gh auth
+ssh -T git@github.com            # 检查 SSH (如果用 SSH)
+gh release view v1.0             # 检查其他 gh 命令是否工作
 ```
 
 ## 命令
@@ -144,7 +221,7 @@ wr recap 2026 --provider openai --save my-recap.md  # 自定义输出路径
 ### 一键安装
 
 ```bash
-bash ~/Downloads/mass/For_Codex/bin/install_reminder.sh
+bash ~/Downloads/mass/23-For_Codex/bin/install_reminder.sh
 ```
 
 会做这些事：
@@ -172,7 +249,7 @@ launchctl list | grep weekly-report
 tail -f /tmp/weekly-report-reminder.log
 
 # 卸载
-bash ~/Downloads/mass/For_Codex/bin/uninstall_reminder.sh
+bash ~/Downloads/mass/23-For_Codex/bin/uninstall_reminder.sh
 ```
 
 ### 工作原理
@@ -195,7 +272,7 @@ bash ~/Downloads/mass/For_Codex/bin/uninstall_reminder.sh
 把下面这行加到你的 `~/.zshrc`（或 `~/.bashrc`）里：
 
 ```sh
-alias wr="python3 ~/Downloads/mass/For_Codex/weekly_report.py"
+alias wr="python3 ~/Downloads/mass/23-For_Codex/weekly_report.py"
 ```
 
 之后任何目录敲 `wr` 即可。
